@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shanecore_systems™ - ENHANCED MEMORY GAME</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div id="splash-overlay"></div>
+        <div id="splash-content">
+            <h1 id="splash-text">shanecore_systems<sup>TM</sup> - ENHANCED MEMORY GAME</h1>
+            <div id="loading-bar">
+                <div id="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Container -->
+    <div id="game-container" class="hidden">
+        <!-- Header -->
+        <header>
+            <h1>shanecore_systems<sup>TM</sup> - ENHANCED MEMORY GAME</h1>
+            <nav>
+                <button id="sound-btn">🔊</button>
+                <button id="scoreboard-btn">Scoreboard</button>
+                <button id="achievements-btn">Achievements</button>
+            </nav>
+        </header>
+
+        <!-- Game Mode Selection -->
+        <div id="mode-selection-screen">
+            <div class="selection-box">
+                <h2>Select Game Mode</h2>
+                <div class="mode-options">
+                    <button id="classic-mode-btn">Classic Mode</button>
+                    <button id="time-attack-btn">Time Attack (60s)</button>
+                    <button id="multiplayer-btn">2 Player Mode</button>
+                    <button id="daily-challenge-btn">Daily Challenge</button>
+                    <button id="ai-challenge-btn">VS AI</button>
+                </div>
+                
+                <div class="game-settings">
+                    <div class="setting">
+                        <label for="difficulty">Difficulty:</label>
+                        <select id="difficulty">
+                            <option value="2000">Easy (2s)</option>
+                            <option value="1000" selected>Medium (1s)</option>
+                            <option value="500">Hard (0.5s)</option>
+                            <option value="300">Insane (0.3s)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting">
+                        <label for="number-style">Number Style:</label>
+                        <select id="number-style">
+                            <option value="decimal" selected>Decimal</option>
+                            <option value="binary">Binary</option>
+                            <option value="hex">Hexadecimal</option>
+                            <option value="matrix">Matrix</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Name Input -->
+        <div id="name-input-screen" class="hidden">
+            <div class="input-box">
+                <h2>Enter Player Names</h2>
+                <div id="single-player-input">
+                    <input type="text" id="player-name" placeholder="Your name" maxlength="20">
+                </div>
+                <div id="multiplayer-input" class="hidden">
+                    <input type="text" id="player1-name" placeholder="Player 1" maxlength="20">
+                    <input type="text" id="player2-name" placeholder="Player 2" maxlength="20">
+                </div>
+                <button id="start-game-btn">Start Game</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden">
+            <div id="game-info">
+                <div id="player-info">
+                    <p>Player: <span id="current-player"></span></p>
+                    <p id="player2-info" class="hidden">Player 2: <span id="player2-score">0</span></p>
+                </div>
+                <div id="game-stats">
+                    <p>Level: <span id="current-level">1</span></p>
+                    <p>Score: <span id="current-score">0</span></p>
+                    <p id="time-attack-timer" class="hidden">Time: <span id="timer">60</span>s</p>
+                </div>
+                <div id="powerups">
+                    <button id="peek-btn" class="powerup-btn" title="Peek (3 left)">👁️</button>
+                    <button id="slowmo-btn" class="powerup-btn" title="Slow Motion (1 left)">⏱️</button>
+                    <button id="double-btn" class="powerup-btn" title="Double Points (1 left)">✖️2</button>
+                </div>
+            </div>
+            
+            <div id="number-display" class="animate__animated"></div>
+            
+            <div id="input-section">
+                <input type="text" id="user-input" placeholder="Type the number..." disabled>
+                <button id="submit-btn" disabled>Submit</button>
+                <button id="ai-submit-btn" class="hidden">AI Submit</button>
+            </div>
+            
+            <div id="feedback" class="animate__animated"></div>
+            
+            <div id="ai-thinking" class="hidden">
+                <div class="ai-progress-bar">
+                    <div class="ai-progress"></div>
+                </div>
+                <p>AI is thinking...</p>
+            </div>
+        </div>
+
+        <!-- Scoreboard Screen -->
+        <div id="scoreboard-screen" class="hidden">
+            <h2>Scoreboard</h2>
+            <div class="scoreboard-tabs">
+                <button class="tab-btn active" data-tab="classic">Classic</button>
+                <button class="tab-btn" data-tab="timeattack">Time Attack</button>
+                <button class="tab-btn" data-tab="daily">Daily</button>
+            </div>
+            <table id="scoreboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Duration</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button id="back-to-menu-btn">Back to Menu</button>
+        </div>
+
+        <!-- Achievements Screen -->
+        <div id="achievements-screen" class="hidden">
+            <h2>Your Achievements</h2>
+            <div id="achievements-grid"></div>
+            <button id="back-to-menu-btn-2">Back to Menu</button>
+        </div>
+
+        <!-- Daily Challenge Info -->
+        <div id="daily-challenge-screen" class="hidden">
+            <h2>Today's Challenge</h2>
+            <div id="challenge-details">
+                <h3 id="challenge-name"></h3>
+                <p id="challenge-description"></p>
+                <div id="challenge-modifiers"></div>
+            </div>
+            <button id="start-challenge-btn">Accept Challenge</button>
+            <button id="back-to-menu-btn-3">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Game Results Screen -->
+    <div id="results-screen" class="hidden">
+        <div class="results-box">
+            <h2 id="results-title">Game Over!</h2>
+            <div id="results-content"></div>
+            <div class="results-actions">
+                <button id="play-again-btn">Play Again</button>
+                <button id="share-btn">Share Score</button>
+                <button id="menu-btn">Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>shanecore_systems<sup>TM</sup> Enhanced Memory Game &copy; 2025. All Rights Reserved.</p>
+        <div id="social-share">
+            <button class="social-btn" id="twitter-share">Twitter</button>
+            <button class="social-btn" id="facebook-share">Facebook</button>
+            <button class="social-btn" id="qr-btn">QR Code</button>
+        </div>
+    </footer>
+
+    <!-- Audio Elements -->
+    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    <audio id="wrong-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+    <audio id="bg-music" loop src="https://assets.mixkit.co/music/preview/mixkit-game-show-suspense-waiting-668.mp3"></audio>
+    <audio id="level-up-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+    <audio id="powerup-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-extra-bonus-in-a-video-game-2045.mp3"></audio>
+    <audio id="countdown-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-countdown-922.mp3"></audio>
+
+    <!-- QR Code Modal -->
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Challenge Friends!</h3>
+            <div id="qr-code"></div>
+            <p>Scan this code to play</p>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
